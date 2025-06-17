@@ -1,21 +1,32 @@
-R = [(7, 1, 2), (5, 1, 3), (5, 1, 4),
-     (8, 2, 4), (9, 3, 4), (5, 4, 5), (4, 4, 6), (4, 4, 7), (10, 5, 7), (8, 6, 7)]
-
-N = 7
-U = {1}
-T = []
-while len(U) < N:
-    min_weight = 100**10
-    min_edge = (-1, -1, -1)
-    for edge in R:
-        w, u, v = edge
-        if (u in U or v in U) and not (u in U and v in U):
-            if w < min_weight:
-                min_weight = w
-                min_edge = edge
-    if min_weight == 100**10:
-        break
-    T.append(min_edge)
-    U.add(min_edge[1])
-    U.add(min_edge[2])
-print(T)
+x = [43, 4, 84, 70, 81, 0, 22, 94, 80, 9]
+width = 1
+n = len(x)
+while width < n:
+    left = 0
+    while left + width < n:
+        right = min(left + 2 * width - 1, n - 1)
+        mid = left + width - 1
+        left_part = x[left:mid + 1]
+        right_part = x[mid + 1:right + 1]
+        i = 0
+        j = 0
+        k = left
+        while i < len(left_part) and j < len(right_part):
+            if left_part[i] <= right_part[j]:
+                x[k] = left_part[i]
+                i += 1
+            else:
+                x[k] = right_part[j]
+                j += 1
+            k += 1
+        while i < len(left_part):
+            x[k] = left_part[i]
+            i += 1
+            k += 1
+        while j < len(right_part):
+            x[k] = right_part[j]
+            j += 1
+            k += 1
+        left += 2 * width
+    width *= 2
+print("Отсортированный массив:", x)

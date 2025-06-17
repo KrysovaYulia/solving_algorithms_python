@@ -1,18 +1,32 @@
-text = "не следует, однако, забывать"
-pattern = "одна"
-n = len(text)
-m = len(pattern)
-i = 0
-found_index = -1
-while i <= n - m:
-    j = 0
-    while j < m and not (text[i + j] < pattern[j] or pattern[j] < text[i + j]):
-        j += 1
-    if j == m:
-        found_index = i
-        break
-    i += 1
-if found_index + 1:
-    print("Подстрока найдена на позиции", found_index)
-else:
-    print("Подстрока не найдена")
+x = [43, 4, 84, 70, 81, 0, 22, 94, 80, 9]
+
+stack = [(0, len(x) - 1)]
+
+while stack:
+    low, high = stack.pop()
+
+    if low >= high:
+        continue
+
+    mid = (low + high) // 2
+    pivot = x[mid]
+
+    left = low
+    right = high
+
+    while True:
+        while x[left] < pivot:
+            left += 1
+        while x[right] > pivot:
+            right -= 1
+
+        if left >= right:
+            break
+
+        x[left], x[right] = x[right], x[left]
+        left += 1
+        right -= 1
+    stack.append((right + 1, high))
+    stack.append((low, right))
+
+print(x)
